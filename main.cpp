@@ -131,3 +131,35 @@ void checkRegTime(){                                            //Chequea el tie
         accum_time_reg = 0;
     }
 }
+
+void stateUpdate(){
+    switch (stateProcess){
+    case NORMAL:
+        normalTempLED = ENCENDIDO;
+        break;
+
+    case CALENTANDO:
+        if (temperatura > tempPromedio){
+            minTempLED = APAGADO;                                        //Activa una resistencia calefactora (representado por un LED)
+            state = NORMAL;
+            uartUsb.write("Temperatura normalizada\r\n", 24);
+        }
+        else {
+            minTempLED = ENCENDIDO;                                        //Activa una resistencia calefactora (representado por un LED)
+            normalTempLED = APAGADO;
+        }
+        break;
+
+    case ENFRIANDO:
+        if (temperatura < tempPromedio){
+            maxTempLED = APAGADO;
+            state = NORMAL;
+            uartUsb.write("Temperatura normalizada\r\n", 24);
+        }
+        else {
+            maxTempLED = ENCENDIDO;                                        //Activa un ventilador (representado por un LED)
+            normalTempLED = APAGADO;
+        }
+        break;
+    }
+}
