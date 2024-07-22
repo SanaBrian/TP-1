@@ -71,7 +71,7 @@ void initOuputs(){
 }
 
 void initSamplerAverager(){
-    for (int i = 0; i <= NUMBER_OF_AVG_SAMPLES; i++){
+    for (int i = 0; i < NUMBER_OF_AVG_SAMPLES; i++){
         lm35ReadingsArray[i] = tempSensor.read();
     }
 }
